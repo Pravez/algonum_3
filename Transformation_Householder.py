@@ -1,6 +1,9 @@
 import numpy as np
 
 
+X = np.matrix('[3; 4; 0.]')
+Y = np.matrix('[0; 0; 5.]')
+
 def findVector(x, y):
     num = x-y
     denom = np.linalg.norm((x-y))
@@ -22,4 +25,6 @@ def applyOptimalHouseholderVector(x, y, u):
     n = findVector(x, y)
     return
 
-print(applyHouseholderVector(np.matrix('[3; 4; 0.]'), np.matrix('[0; 0; 5.]'), np.matrix('[3; 4; 0.]')))
+#print(applyHouseholderVector(np.matrix('[3; 4; 0.]'), np.matrix('[0; 0; 5.]'), np.matrix('[3; 4; 0.]')))
+
+A = np.mat(householderProjection(X, Y))
