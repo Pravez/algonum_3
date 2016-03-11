@@ -14,14 +14,37 @@ def getRowFromMatrix(matrix, i, m):
     return temp
 
 def getBidiagonal(A):
-    n = len(A)
-    m = len(A[0])
+    n, m = A.shape
     BD = A
-    QLeft = np.identity(n)
-    QRight = np.identity(m)
-#    for i in range (0, n):
+    QLeft = np.mat(np.identity(n))
+    QRight = np.mat(np.identity(m))
+    for i in range (0, n):
+        u = getColumnFromMatrix(BD, i, n)
+        v = np.mat(np.zeros((n,1)))
+        v[i,0] = np.linalg.norm(u)
+        Q1 = householderProjection(u, v)
+        QLeft = QLeft * Q1
+        BD = Q1 * BD
+        if i<(m-2):
+            u = getRowFromMatrix(BD, i, m)
+            v = np.mat(np.zeros((m,1)))
+            v[i+1,0] = np.linalg.norm(u)
+            Q2 = householderProjection(u, v)
+            QRight = Q2 * QRight
+            BD = BD * Q2
+    return (QLeft,BD,QRight)
 
 
 
-print(getColumnFromMatrix(A, 1, 3))
-print(getRowFromMatrix(A, 1, 3))
+B = np.matrix('[11 21 5 12; 48 548 16 887; 47 88 91 45; 17 32 68 17]')
+
+np.set_printoptions(precision=2)
+QLeft,BD,QRight = getBidiagonal(B)
+print(QLeft)
+print(BD)
+print(QRight)
+
+print(QLeft * BD * QRight)
+print(B)
+print(QLeft * np.transpose(QLeft))
+print(QRight * np.transpose(QRight))
