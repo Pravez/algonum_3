@@ -33,10 +33,3 @@ def getBidiagonal(A):
             QRight = Q2 * QRight
             BD = BD * Q2
     return (QLeft,BD,QRight)
-
-
-
-B = np.matrix('[11 21 5 12; 48 548 16 887; 47 88 91 45; 17 32 68 17]')
-
-np.set_printoptions(precision=2)
-QLeft,BD,QRight = getBidiagonal(B)
