@@ -1,6 +1,6 @@
 import numpy as np
 
-
+epsilon = 10**-10
 X = np.matrix('[3; 4; 0.]')
 Y = np.matrix('[0; 0; 5.]')
 
@@ -10,6 +10,8 @@ def findVector(x, y):
     return num/denom
 
 def householderProjection(x, y):
+    if (np.all(abs(x-y)< epsilon)):
+        return np.mat(np.identity(len(x)))
     u = findVector(x, y)
     n = len(x)
     return np.identity(n)-2*(np.dot(u, np.transpose(u)))

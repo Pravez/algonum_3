@@ -12,10 +12,10 @@ def repeat(times):
     return repeatHelper
 
 
-class TestBidiagonal(unittest.TestCase):
+class Test_Bidiagonal(unittest.TestCase):
 
     def test_bidiag_prev(self):
-        B = np.matrix('[11 21 5 12; 48 548 16 887; 47 88 91 45; 17 32 68 17]')
+        B = np.matrix('[65 78 47 87; 48 548 980 874; 98 75 48 51; 98 54 87 45]')
         n, m = 3, 3
         QLeft, BD, QRight = getBidiagonal(B)
         produit = QLeft * BD * QRight
