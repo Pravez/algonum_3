@@ -40,11 +40,3 @@ B = np.matrix('[11 21 5 12; 48 548 16 887; 47 88 91 45; 17 32 68 17]')
 
 np.set_printoptions(precision=2)
 QLeft,BD,QRight = getBidiagonal(B)
-print(QLeft)
-print(BD)
-print(QRight)
-
-print(QLeft * BD * QRight)
-print(B)
-print(QLeft * np.transpose(QLeft))
-print(QRight * np.transpose(QRight))
