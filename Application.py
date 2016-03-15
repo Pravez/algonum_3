@@ -29,33 +29,47 @@ def getPixels(image, pix):
     ret = np.mat(np.zeros((n, m)))
     for i in range(0, n):
         for j in range(0, m):
-            ret[i, j] = image[i, j, pix]
+            ret[i, j] = image[i][j][pix]
 
     return ret
 
 def reconstitute_image(red, green, blue):
     n, m = red.shape
-    res = np.zeros((n, m, 3))
+    res = np.zeros((n, m, 3), dtype="uint8")
     for i in range(0, n):
         for j in range(0, m):
-            res[i, j, 0] = red[i, j]
-            res[i, j, 1] = green[i, j]
-            res[i, j, 2] = blue[i, j]
+            if(red[i, j] > 255):
+                red[i, j] = 255
+            if(green[i, j] > 255):
+                green[i, j] = 255
+            if(blue[i, j] > 255):
+                blue[i, j] = 255
+            res[i][j][0] = red[i, j]
+            res[i][j][1] = green[i, j]
+            res[i][j][2] = blue[i, j]
 
     return res
+
+def apply_compression(matrix):
+    QL, BD, QR = getBidiagonal(matrix)
+    U, S, V = qr_transform(BD, 20)
+    S = remove_on_diag(S, 30)
+
+    return QL*U*S*V*QR
 
 def Apply_to_image(image):
     img = misc.imread(image)
 
-    print(img)
     red = getPixels(img, 0)
     green = getPixels(img, 1)
     blue = getPixels(img, 2)
 
-    rec = reconstitute_image(red, green, blue)
-    print("-----------------------------------------------------------")
-    print(rec)
+    red_c = apply_compression(red)
+    green_c = apply_compression(green)
+    blue_c = apply_compression(blue)
 
+    rec = reconstitute_image(red_c, green_c, blue_c)
+    #print(rec)
 
     plt.imshow(rec)
     plt.show()
@@ -75,7 +89,8 @@ def Apply_to_image_with_gs(image):
     U, S, V = qr_transform(BD, 20)
     S = remove_on_diag(S, 10)
 
-    plt.imshow(QL*U*S*V*QR, cmap = matplotlib.cm.Greys_r)
+    rec = QL*U*S*V*QR
+    plt.imshow(rec, cmap = matplotlib.cm.Greys_r)
     plt.show()
 
-Apply_to_image_with_gs("p3_takeoff_base.png")
+Apply_to_image("p3_takeoff_base.png")
