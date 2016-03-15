@@ -28,7 +28,6 @@ class TestQRTransform(unittest.TestCase):
         conv = [0 for i in range(1, NB)]
 
         for k in range(1, NB):
-            print(k)
             U, S, V = qr_transform(BD, k)
             produit = U*S*V
             for i in range(0, n):
@@ -40,6 +39,20 @@ class TestQRTransform(unittest.TestCase):
 
         plt.plot(iter, conv)
         plt.show()
+
+
+
+n,m = 100, 100
+B = np.mat(10*np.random.rand(n, m))
+QLeft, BD, QRight = getBidiagonal(B)
+
+BD=np.transpose(BD)
+a = time.clock()
+qr_bidiag(BD)
+b = time.clock()
+print(b-a)
+np.linalg.qr(BD,mode='complete')
+print(time.clock()-b)
 
 if __name__ == '__main__':
     unittest.main()
