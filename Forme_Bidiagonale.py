@@ -3,8 +3,10 @@ from Transformation_Householder import *
 
 def getColumnFromMatrix(matrix, i, n):
     temp = np.matrix(np.zeros((n, 1)))
-    for k in range (i, n):
-        temp[k, 0] = matrix[k, i]
+    n,m = matrix.shape
+    if i<m:
+        for k in range (i, n):
+            temp[k, 0] = matrix[k, i]
     return temp
 
 def getRowFromMatrix(matrix, i, m):
