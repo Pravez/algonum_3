@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-epsilon = 10**-15
+epsilon = 10**-10
 X = np.matrix('[3; 4; 0.]')
 Y = np.matrix('[0; 0; 5.]')
 

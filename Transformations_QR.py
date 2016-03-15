@@ -2,6 +2,8 @@
 import numpy as np
 from Forme_Bidiagonale import *
 import matplotlib.pyplot as plt
+import copy
+import time
 
 np.set_printoptions(linewidth=200)
 
@@ -18,3 +20,33 @@ def qr_transform(BD, NMax):
         U = U * Q2  # n*n
         V = np.transpose(Q1) * V  # m*m
     return (U, S, V)
+
+def givens(a,b):
+    r = np.sqrt(a*a+b*b)
+    return float(a)/r, -float(b)/r
+
+def qr_bidiag(BD):
+    n,m = BD.shape
+    print("-----------------------")
+    BD2 = copy.copy(BD)
+
+    giv_tot= np.mat(np.identity(n))
+    giv_tot_2= np.mat(np.identity(n))
+    for i in range(0, n-1):
+        cs,sn = givens(BD2[i, i], BD2[i+1, i])
+
+        e = BD2[i, i]
+        f = BD2[i+1, i]
+        g = BD2[i, i+1]
+        h = BD2[i+1, i+1]
+        BD2[i, i] = cs*e - sn*f
+        BD2[i+1,i] = 0
+        BD2[i, i+1] = cs*g - sn*h
+        BD2[i+1, i+1] = sn*g + cs*h
+
+        for j in range(0,i+2):
+            a,b = giv_tot_2[j, i], giv_tot_2[j, i+1]
+            giv_tot_2[j,i+1] = sn*a + cs*b
+            giv_tot_2[j,i] = cs*a - sn*b
+
+    return giv_tot_2,BD2
