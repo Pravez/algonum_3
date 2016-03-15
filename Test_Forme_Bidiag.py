@@ -50,7 +50,7 @@ class Test_Bidiagonal(unittest.TestCase):
 
     @repeat(100)
     def test_bidiag_prev_2(self):
-        n, m = random.randint(5,10), random.randint(5,10)
+        n, m = random.randint(5,50), random.randint(5,50)
         B = np.mat(100*np.random.rand(n, m))
         QLeft, BD, QRight = getBidiagonal(B)
         produit = QLeft * BD * QRight

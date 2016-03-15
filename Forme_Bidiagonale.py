@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from Transformation_Householder import *
 
@@ -34,4 +35,12 @@ def getBidiagonal(A):
             Q2 = householderProjection(u, v)
             QRight = Q2 * QRight
             BD = BD * Q2
+
+    # Remet des zéros dans les termes qui ne sont pas dans la bidiagonale
+    for i in range(0,n):
+        for j in range(i+2,m):
+            BD[i, j] = 0
+        for j in range(0,i):
+            if j<m:
+                BD[i, j] = 0
     return (QLeft,BD,QRight)
