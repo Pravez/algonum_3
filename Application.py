@@ -113,13 +113,17 @@ def get_Compressed_image(image, compression_rate):
     array_colors.append(green_tuple)
     array_colors.append(blue_tuple)
 
-    plt.imshow(Compress_Image(array_colors, compression_rate))
-    plt.show()
+    #plt.imshow(Compress_Image(array_colors, compression_rate))
+    #plt.show()
+
+    mp.image.imsave("compress10.png", Compress_Image(array_colors, 10))
+    mp.image.imsave("compress50.png", Compress_Image(array_colors, 50))
+    mp.image.imsave("compress100.png", Compress_Image(array_colors, 100))
 
 
 qr_rate = 20
 
 #get compressed image with certain compression rate
-##get_Compressed_image("p3_takeoff_base.png", 50)
+get_Compressed_image("p3_takeoff_base.png", 50)
 #get effectiveness
-create_effectiveness("p3_takeoff_base.png")
+#create_effectiveness("p3_takeoff_base.png")
