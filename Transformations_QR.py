@@ -27,7 +27,6 @@ def givens(a,b):
 
 def qr_bidiag(BD):
     n,m = BD.shape
-    print("-----------------------")
     BD2 = copy.copy(BD)
 
     giv_tot= np.mat(np.identity(n))
