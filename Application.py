@@ -79,25 +79,29 @@ def measure_effectiveness(image1, image2):
 def create_effectiveness(image):
     img = mp.image.imread(image)
 
+    print("Getting each pixel's matrix ...")
     red = get_pixels_from_color(img, 0)
     green = get_pixels_from_color(img, 1)
     blue = get_pixels_from_color(img, 2)
 
+    print("Getting bidiagonals and applying qr ...")
     (red_tuple, green_tuple, blue_tuple) = colors_bidiag_qr(red, green, blue, qr_rate)
     array_colors = []
     array_colors.append(red_tuple)
     array_colors.append(green_tuple)
     array_colors.append(blue_tuple)
 
-
+    print("Measuring effectiveness ...")
     eff = []
-    for i in range(0, 100):
+    for i in range(0, 200):
         print("rank "+`i`+"...")
         eff.append(measure_effectiveness(img, Compress_Image(array_colors, i)))
 
-    iter = [i for i in range (0, 100)]
+    iter = [i for i in range (0, 200)]
 
     plt.plot(iter, eff)
+    plt.ylabel("Distance entre les matrices")
+    plt.xlabel("Compression au rang k")
     plt.show()
 
 def get_Compressed_image(image, compression_rate):
@@ -113,17 +117,13 @@ def get_Compressed_image(image, compression_rate):
     array_colors.append(green_tuple)
     array_colors.append(blue_tuple)
 
-    #plt.imshow(Compress_Image(array_colors, compression_rate))
-    #plt.show()
-
-    mp.image.imsave("compress10.png", Compress_Image(array_colors, 10))
-    mp.image.imsave("compress50.png", Compress_Image(array_colors, 50))
-    mp.image.imsave("compress100.png", Compress_Image(array_colors, 100))
+    plt.imshow(Compress_Image(array_colors, compression_rate))
+    plt.show()
 
 
 qr_rate = 20
 
 #get compressed image with certain compression rate
-get_Compressed_image("p3_takeoff_base.png", 50)
+##get_Compressed_image("p3_takeoff_base.png", 50)
 #get effectiveness
-#create_effectiveness("p3_takeoff_base.png")
+create_effectiveness("p3_takeoff_base.png")
