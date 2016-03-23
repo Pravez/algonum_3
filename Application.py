@@ -1,5 +1,5 @@
 import matplotlib as mp
-import copy
+import matplotlib.pyplot as plt
 from Transformations_QR import *
 
 def modifier(U,S):
