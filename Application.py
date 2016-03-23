@@ -2,24 +2,6 @@ import matplotlib as mp
 import matplotlib.pyplot as plt
 from Transformations_QR import *
 
-def modifier(U,S):
-    print(U*S)
-    n, m = S.shape
-    diag = [S[i, i] for i in range(0,min(n,m))]
-    tri = np.sort(diag)
-    diag = [float(diag[i])/tri[i] for i in range(0,min(n,m))]
-    for i in range(0,min(n,m)):
-        S[i, i]= tri[i]
-        for j in range(0,m):
-            U[i,j] = U[i,j] * diag[i]
-
-    print(diag)
-    return U, S
-
-U,S = modifier(np.matrix('[2 7 8; 9 8 7; 5 4 8]'),np.matrix('[1 0 0; 0 5 0; 0 0 2]'))
-print(U*S)
-print(S)
-
 def compress_rank_k(S, k):
     n, m = S.shape
     SS = copy.copy(S)
